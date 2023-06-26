@@ -1,0 +1,13 @@
+default:
+all_set:
+  metrics:
+    tcp.queue.length:
+      enabled: true
+    tcp.queue.size:
+      enabled: true
+none_set:
+  metrics:
+    tcp.queue.length:
+      enabled: false
+    tcp.queue.size:
+      enabled: false

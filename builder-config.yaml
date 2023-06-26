@@ -1,0 +1,17 @@
+dist:
+  name: otelcol
+  description: Custom OTel Collector distribution
+  output_path: ./otelcol-dev
+  otelcol_version: 0.80.0
+
+exporters:
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/exporter/prometheusexporter v0.80.0
+
+processors:
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/attributesprocessor v0.80.0
+
+receivers:
+  - gomod: github.com/drewby/tcpstatsreceiver v0.80.0
+    import: github.com/drewby/tcpstatsreceiver
+    name: "tcpstatsreceiver"
+    path: "./tcpstatsreceiver"

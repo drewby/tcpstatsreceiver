@@ -1,0 +1,36 @@
+type: tcpstats
+
+status:
+  class: receiver
+  stability:
+    alpha: [metrics]
+  distributions: [contrib]
+
+attributes:
+  queue:
+    description: Indicates the total number of sockets currently present in the TCP transmit and receive queues.
+    type: string
+  local.address:
+    description: Represents the IP address where the TCP socket is actively listening for incoming connections.
+    enabled: true
+    type: string
+  local.port:
+    description: Indicates the specific IP port at which the TCP socket is prepared to accept incoming data.
+    enabled: true
+    type: int
+
+metrics:
+  tcp.queue.size:
+    description: Represents the total data size in bytes in the TCP transmit (tx) and receive (rx) queues.
+    enabled: true
+    gauge:
+      value_type: int
+    unit: bytes
+    attributes: [local.address, local.port, queue]
+  tcp.queue.length:
+    description: Indicates the total number of sockets currently present in the TCP transmit and receive queues.
+    enabled: true
+    gauge:
+      value_type: int
+    unit: sockets 
+    attributes: [local.address, local.port]

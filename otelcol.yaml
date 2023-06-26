@@ -1,0 +1,26 @@
+receivers:
+  tcpstats:
+    path: /proc/net/tcp
+    portfilter: 8005
+    collection_interval: 5s
+
+processors:
+  attributes:
+    actions:
+      - key: host.name
+        value: "$HOSTNAME"
+        action: insert
+
+exporters:
+  prometheus:
+    endpoint: 0.0.0.0:8889
+
+service:
+  telemetry:
+    logs:
+      level: "info"
+  pipelines:
+    metrics:
+      receivers: [tcpstats]
+      processors: [attributes]
+      exporters: [prometheus]

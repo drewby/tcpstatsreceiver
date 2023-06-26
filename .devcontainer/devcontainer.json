@@ -1,0 +1,46 @@
+{
+  "name": "dapr development",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  // "appPort": 8000,
+  "extensions": [
+    "golang.go",
+    "ms-azuretools.vscode-docker",
+    "ms-kubernetes-tools.vscode-kubernetes-tools",
+    "GitHub.copilot",
+    "ms-vscode.makefile-tools"
+  ],
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/sshd:1": {}
+  },
+  "settings": {
+    "go.toolsManagement.checkForUpdates": "local",
+    "go.useLanguageServer": true,
+    "go.gopath": "/usr/local/go/bin"
+  },
+  // "postCreateCommand": "go mod download",
+  "runArgs": [
+    "-u",
+    "vscode",
+    "--cap-add=SYS_PTRACE",
+    "--security-opt",
+    "seccomp=unconfined",
+    // map SSH keys for Git
+    "-v",
+    "${env:HOME}/.ssh:/home/vscode/.ssh:ro"
+  ],
+  "portsAttributes": {
+    "3000": {
+      "label": "Grafana"
+    },
+    "9090": {
+      "label": "Prometheus"
+    }
+  },
+  "forwardPorts": [
+    3000,
+    9090
+  ]
+}

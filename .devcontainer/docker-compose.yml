@@ -1,0 +1,58 @@
+version: '3'
+
+networks:
+  public: {}
+
+volumes:
+  grafana_lib: {}
+  prometheus_data: {}
+  prometheus_config:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      - ..:/workspace:cached
+
+    networks:
+      - public
+
+    command: /bin/sh -c "while sleep 1000; do :; done"
+
+    user: vscode
+
+  prometheus:
+    image: prom/prometheus:v2.37.1
+    restart: unless-stopped
+    ports:
+      - 9090:9090
+    networks:
+      - public
+    volumes:
+      - prometheus_data:/prometheus
+      - ./config/prometheus.yml:/fragments/complete/prometheus.yml
+      - ./config/prometheus.json:/etc/prometheus/targets/prometheus.json
+      - ./config/grafana.json:/etc/prometheus/targets/grafana.json
+      - ./config/otelcol.json:/etc/prometheus/targets/otelcol.json
+    command:
+      - '--config.file=/fragments/complete/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+
+  grafana:
+    image: grafana/grafana:9.1.5
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    networks:
+      - public
+    volumes:
+      - grafana_lib:/var/lib/grafana
+      - ./config/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=secret
