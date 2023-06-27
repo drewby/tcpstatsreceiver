@@ -41,4 +41,4 @@ Represents the total data size in bytes in the TCP transmit (tx) and receive (rx
 | ---- | ----------- | ------ |
 | local.address | Represents the IP address where the TCP socket is actively listening for incoming connections. | Any Str |
 | local.port | Indicates the specific IP port at which the TCP socket is prepared to accept incoming data. | Any Int |
-| queue | Indicates the total number of sockets currently present in the TCP transmit and receive queues. | Any Str |
+| queue | The queue type, either tx for transmit or rx for receive. | Any Str |

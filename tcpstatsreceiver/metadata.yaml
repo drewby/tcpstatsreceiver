@@ -8,7 +8,7 @@ status:
 
 attributes:
   queue:
-    description: Indicates the total number of sockets currently present in the TCP transmit and receive queues.
+    description: The queue type, either tx for transmit or rx for receive.
     type: string
   local.address:
     description: Represents the IP address where the TCP socket is actively listening for incoming connections.
@@ -32,5 +32,5 @@ metrics:
     enabled: true
     gauge:
       value_type: int
-    unit: sockets 
+    unit: sockets
     attributes: [local.address, local.port]
